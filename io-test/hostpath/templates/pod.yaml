@@ -30,5 +30,5 @@ spec:
       type: FileOrCreate
   - name: result-volume
     hostPath:
-      path: /results/{{ .Values.rtc }}
+      path: /results
       type: FileOrCreate
