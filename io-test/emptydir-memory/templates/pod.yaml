@@ -28,4 +28,4 @@ spec:
   - name: result-volume
     hostPath:
       path: /results
-      type: FileOrCreate
+      type: DirectoryOrCreate
