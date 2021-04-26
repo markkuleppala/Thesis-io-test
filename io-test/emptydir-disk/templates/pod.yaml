@@ -21,6 +21,12 @@ spec:
     volumeMounts:
     - mountPath: /test-volume
       name: emptydir-volume
+    - mountPath: /results
+      name: result-volume
   volumes:
   - name: emptydir-volume
     emptyDir: {}
+  - name: result-volume
+    hostPath:
+      path: /results
+      type: DirectoryOrCreate
