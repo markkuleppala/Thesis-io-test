@@ -15,6 +15,9 @@ spec:
         limits:
           cpu: "{{ .Values.resources.limits.cpu }}"
           memory: "{{ .Values.resources.limits.memory }}"
+      env:
+      - name: RTC
+        value: "{{ .Values.rtc }}""
       volumeMounts:
       - mountPath: /test-volume
         name: hostpath-volume
