@@ -27,8 +27,8 @@ spec:
   - name: hostpath-volume
     hostPath:
       path: /test-volume
-      type: FileOrCreate
+      type: DirectoryOrCreate
   - name: result-volume
     hostPath:
       path: /results
-      type: FileOrCreate
+      type: DirectoryOrCreate
