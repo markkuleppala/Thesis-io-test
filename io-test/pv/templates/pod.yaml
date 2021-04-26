@@ -15,7 +15,14 @@ spec:
       limits:
         cpu: "{{ .Values.resources.limits.cpu }}"
         memory: "{{ .Values.resources.limits.memory }}"
+    volumeMounts:
+    - mountPath: /results
+      name: result-volume
   volumes:
   - name: pv-local
     persistentVolumeClaim:
       claimName: pvc-local
+  - name: result-volume
+    hostPath:
+      path: /results
+      type: DirectoryOrCreate
