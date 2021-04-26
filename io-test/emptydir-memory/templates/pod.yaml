@@ -18,8 +18,14 @@ spec:
       volumeMounts:
       - mountPath: /test-volume
         name: emptydir-volume
+      - mountPath: /results
+        name: result-volume
   volumes:
   - name: emptydir-volume
     emptyDir:
       medium: Memory
       sizeLimit: "8Gi"
+  - name: result-volume
+    hostPath:
+      path: /results
+      type: FileOrCreate
