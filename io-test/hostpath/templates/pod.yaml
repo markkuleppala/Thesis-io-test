@@ -18,8 +18,14 @@ spec:
       volumeMounts:
       - mountPath: /test-volume
         name: hostpath-volume
+      - mountPath: /results
+        name: result-volume
   volumes:
   - name: hostpath-volume
     hostPath:
       path: /test-volume
       type: FileOrCreate
+  - name: result-volume
+    hostPath:
+      path: /results/{{ .Values.rtc }}
+      type: Directory
