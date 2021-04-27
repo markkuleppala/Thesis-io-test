@@ -4,14 +4,14 @@ metadata:
   name: pv-local
 spec:
   capacity:
-    storage: 100Gi
+    storage: 50Gi
   volumeMode: Block
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   storageClassName: sc-local
   local:
-    path: /home
+    path: /test-volume
   nodeAffinity:
     required:
       nodeSelectorTerms:
