@@ -27,9 +27,9 @@ spec:
       name: result-volume
     volumeMounts:
     - mountPath: /tmp/test-volume
-      name: test-volume
+      name: pv-local
   volumes:
-  - name: test-volume
+  - name: pv-local
     persistentVolumeClaim:
       claimName: pvc-local
   - name: result-volume
