@@ -25,5 +25,5 @@ spec:
     emptyDir: {}
   - name: result-volume
     hostPath:
-      path: /home/results
+      path: /root/results
       type: DirectoryOrCreate
