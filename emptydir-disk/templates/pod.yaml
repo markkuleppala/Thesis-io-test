@@ -5,7 +5,7 @@ metadata:
   namespace: io-test
 spec:
   {{- if eq .Values.rtc "runc" }}
-  runtimeClassName: "runc"
+  runtimeClassName: runc
   {{- else }}
   runtimeClassName: "kata-{{ .Values.rtc }}"
   {{- end }}
