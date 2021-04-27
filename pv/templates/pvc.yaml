@@ -8,5 +8,5 @@ spec:
   volumeMode: Block
   resources:
     requests:
-      storage: 100Gi
+      storage: 50Gi
   storageClassName: sc-local
