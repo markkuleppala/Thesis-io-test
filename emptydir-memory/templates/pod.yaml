@@ -27,5 +27,5 @@ spec:
       sizeLimit: "8Gi"
   - name: result-volume
     hostPath:
-      path: /results
+      path: /root/results
       type: DirectoryOrCreate
