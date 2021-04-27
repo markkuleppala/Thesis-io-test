@@ -23,9 +23,6 @@ RUN apk --no-cache add \
 	linux-headers \
 	coreutils
 
-COPY test.sh test.sh
+COPY test.sh .
 COPY fio_jobfile.fio .
-RUN mkdir results
-RUN mkdir test-volume
 ENTRYPOINT sh test.sh
-#CMD sh test.sh
