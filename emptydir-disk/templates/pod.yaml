@@ -4,9 +4,7 @@ metadata:
   name: "fio-{{ .Values.rtc }}-emptydir-disk"
   namespace: io-test
 spec:
-  {{- if eq .Values.rtc "runc" }}
-  runtimeClassName: runc
-  {{- else }}
+  {{- if ne .Values.rtc "runc" }}
   runtimeClassName: "kata-{{ .Values.rtc }}"
   {{- end }}
   containers:
