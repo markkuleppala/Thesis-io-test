@@ -1,7 +1,6 @@
 #!/bin/bash
 
 mkdir results
-mkdir test-volume
 
 RW="read  write  randread  randwrite"
 
