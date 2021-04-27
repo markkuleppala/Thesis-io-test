@@ -1,0 +1,30 @@
+[global]
+; Do not use fallocate. Not all the filesystem types we can test (such as 9p) support
+; this - which can then generate errors in the JSON datastream.
+fallocate=none
+; Limit runtime
+runtime=${RUNTIME}
+; Ensure that jobs run for a specified time limit, not I/O quantity
+time_based=1
+; To model application load at greater scale, each test client will maintain
+; a number of concurrent I/Os.
+ioengine=libaio
+iodepth=8
+; Note: these two settings are mutually exclusive
+; (and may not apply for Windows test clients)
+direct=0
+buffered=1
+; Settings from Kata container repo
+invalidate=1
+ramp_time=0
+; Set a number of workers on this client
+thread=0
+numjobs=${NUM_JOBS}
+group_reporting=1
+; Each file for each job thread is this size
+filesize=${FILESIZE}
+size=${SIZE}
+filename_format=$jobnum.dat
+
+[fio-job]
+rw=${FIO_RW}
