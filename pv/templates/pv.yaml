@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: sc-local
   local:
-    path: /test-volume
+    path: /tmp/test-volume
   nodeAffinity:
     required:
       nodeSelectorTerms:
