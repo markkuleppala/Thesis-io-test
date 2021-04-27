@@ -4,7 +4,9 @@ metadata:
   name: "fio-{{ .Values.rtc }}-hostpath"
   namespace: io-test
 spec:
+  {{- if ne .Values.rtc "runc" }}
   runtimeClassName: "kata-{{ .Values.rtc }}"
+  {{- end }}
   containers:
   - name: fio
     image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
