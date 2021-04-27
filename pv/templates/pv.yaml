@@ -6,7 +6,7 @@ spec:
   storageClassName: sc-local
   capacity:
     storage: 20Gi
-  volumeMode: Block
+  #volumeMode: Block
   accessModes:
   - ReadWriteOnce
   hostPath:
