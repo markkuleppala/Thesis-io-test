@@ -18,7 +18,7 @@ do
                     --directory=/test-volume \
                     --output-format=json+ \
                     --blocksize=$BS \
-                    --output=/results/$RTC-$BS-$NUM_JOBS-$FIO_RW-$i.json
+                    --output=/results/$VOLUME-$RTC-$BS-$NUM_JOBS-$FIO_RW-$i.json
                 rm -rf test-volume/*.dat
             done
         done
