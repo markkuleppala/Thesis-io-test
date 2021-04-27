@@ -4,11 +4,11 @@ metadata:
   name: "fio-{{ .Values.rtc }}-emptydir-disk"
   namespace: io-test
 spec:
-**{{- if eq .Values.rtc "runc" }}
+  {{- if eq .Values.rtc "runc" }}
   runtimeClassName: "runc"
-**{{- else }}
+  {{- else }}
   runtimeClassName: "kata-{{ .Values.rtc }}"
-**{{- end }}
+  {{- end }}
   containers:
   - name: fio
     image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
