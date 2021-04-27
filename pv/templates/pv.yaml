@@ -3,17 +3,17 @@ kind: PersistentVolume
 metadata:
   name: pv-local
 spec:
+  storageClassName: sc-local
   capacity:
     storage: 20Gi
   volumeMode: Block
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: sc-local
+  hostPath:
+    path: /mnt/test-volume
+  #persistentVolumeReclaimPolicy: Delete
   #local:
   #  path: /tmp/test-volume
-  hostPath:
-    path: /tmp/test-volume
   #nodeAffinity:
   #  required:
   #    nodeSelectorTerms:
