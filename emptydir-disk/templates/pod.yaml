@@ -26,4 +26,4 @@ spec:
   - name: result-volume
     hostPath:
       path: /results
-     # type: DirectoryOrCreate
+      type: DirectoryOrCreate
