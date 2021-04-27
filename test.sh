@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [[ $VOLUME -eq "pv" ]]
+then
+  DIR="/tmp/test-volume"
+else
+  DIR="/test-volume"
+fi
+
 RW="read  write  randread  randwrite"
 
 for NUM_JOBS in 1 2 3
@@ -15,7 +22,7 @@ do
             do
                 RUNTIME=30 FILESIZE=2G SIZE=2G NUM_JOBS=$NUM_JOBS FIO_RW=$FIO_RW \
                     fio fio_jobfile.fio \
-                    --directory=/test-volume \
+                    --directory=$DIR \
                     --output-format=json+ \
                     --blocksize=$BS \
                     --output=/results/$VOLUME-$RTC-$BS-$NUM_JOBS-$FIO_RW-$i.json
