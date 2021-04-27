@@ -1,7 +1,6 @@
 #!/bin/bash
 
-if [[ $VOLUME -eq "pv" ]]
-then
+if [[ "$VOLUME" = "pv" ]]; then
   DIR="/tmp/test-volume"
 else
   DIR="/test-volume"
@@ -26,7 +25,7 @@ do
                     --output-format=json+ \
                     --blocksize=$BS \
                     --output=/results/$VOLUME-$RTC-$BS-$NUM_JOBS-$FIO_RW-$i.json
-                rm -rf test-volume/*.dat
+                rm -rf $DIR/*.dat
             done
         done
     done
