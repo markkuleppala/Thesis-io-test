@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir results
+mkdir test-volume
+
 RW="read  write  randread  randwrite"
 
 for NUM_JOBS in 1 2 3
