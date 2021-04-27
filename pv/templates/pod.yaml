@@ -23,11 +23,10 @@ spec:
         cpu: "{{ .Values.resources.limits.cpu }}"
         memory: "{{ .Values.resources.limits.memory }}"
     volumeMounts:
-    - mountPath: /results
-      name: result-volume
-    volumeMounts:
     - mountPath: /tmp/test-volume
       name: pv-local
+    - mountPath: /results
+      name: result-volume
   volumes:
   - name: pv-local
     persistentVolumeClaim:
