@@ -1,7 +1,5 @@
 #!/bin/bash
 
-mkdir results
-
 RW="read  write  randread  randwrite"
 
 for NUM_JOBS in 1 2 3
@@ -20,7 +18,7 @@ do
                     --directory=/test-volume \
                     --output-format=json+ \
                     --blocksize=$BS \
-                    --output=/results/$RTC-BS$BS-J$NUM_JOBS-$FIO_RW-$i.json
+                    --output=/results/$RTC-$BS-$NUM_JOBS-$FIO_RW-$i.json
                 rm -rf test-volume/*.dat
             done
         done
