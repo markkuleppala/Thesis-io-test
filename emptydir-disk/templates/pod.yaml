@@ -11,6 +11,8 @@ spec:
     env:
     - name: RTC
       value: "{{ .Values.rtc }}"
+    - name: VOLUME
+      value: emptydir-disk
     resources:
       requests:
         cpu: "{{ .Values.resources.requests.cpu }}"
