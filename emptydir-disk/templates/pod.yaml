@@ -8,6 +8,9 @@ spec:
   containers:
   - name: fio
     image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+    env:
+    - name: RTC
+      value: "{{ .Values.rtc }}"
     resources:
       requests:
         cpu: "{{ .Values.resources.requests.cpu }}"
