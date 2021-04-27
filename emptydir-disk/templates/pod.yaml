@@ -6,9 +6,6 @@ metadata:
 spec:
   runtimeClassName: "kata-{{ .Values.rtc }}"
   containers:
-  - command:
-    - kube-apiserver
-    - --feature-gates=PodOverhead=false
   - name: fio
     image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
     resources:
