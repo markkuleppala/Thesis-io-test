@@ -10,13 +10,15 @@ spec:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   storageClassName: sc-local
-  local:
+  #local:
+  #  path: /tmp/test-volume
+  hostPath:
     path: /tmp/test-volume
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - master-node
+  #nodeAffinity:
+  #  required:
+  #    nodeSelectorTerms:
+  #    - matchExpressions:
+  #      - key: kubernetes.io/hostname
+  #        operator: In
+  #        values:
+  #        - master-node
