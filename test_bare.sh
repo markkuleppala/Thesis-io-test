@@ -16,7 +16,7 @@ do
             for i in 1 2 3
             do
                 RUNTIME=30 FILESIZE=2G SIZE=2G NUM_JOBS=$NUM_JOBS FIO_RW=$FIO_RW \
-                    taskset -cp 3 fio fio_jobfile.fio \
+                    taskset -c 3 fio fio_jobfile.fio \
                     --directory=$HOME/test-volume \
                     --output-format=json+ \
                     --blocksize=$BS \
