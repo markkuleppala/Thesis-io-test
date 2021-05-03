@@ -8,9 +8,6 @@ spec:
   runtimeClassName: "kata-{{ .Values.rtc }}"
   {{- end }}
   containers:
-   - command:
-    - kube-apiserver
-    - --cpu-manager-policy=static
   - name: fio
     image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
     env:
