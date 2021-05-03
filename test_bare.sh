@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir test-volume results
+mkdir $HOME/test-volume $HOME/results
 
 RW="read  write  randread  randwrite"
 
@@ -17,11 +17,11 @@ do
             do
                 RUNTIME=30 FILESIZE=2G SIZE=2G NUM_JOBS=$NUM_JOBS FIO_RW=$FIO_RW \
                     fio fio_jobfile.fio \
-                    --directory=/test-volume \
+                    --directory=$HOME/test-volume \
                     --output-format=json+ \
                     --blocksize=$BS \
-                    --output=/results/$VOLUME-bare-$BS-$NUM_JOBS-$FIO_RW-$i.json
-                rm -rf $DIR/*.dat
+                    --output=$HOME/results/$VOLUME-bare-$BS-$NUM_JOBS-$FIO_RW-$i.json
+                rm $HOME/test-volume/*.dat
             done
         done
     done
