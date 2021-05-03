@@ -20,7 +20,7 @@ do
                     --directory=$HOME/test-volume \
                     --output-format=json+ \
                     --blocksize=$BS \
-                    --output=$HOME/results/bared-bare-$BS-$NUM_JOBS-$FIO_RW-$i.json
+                    --output=$HOME/results/bare-bare-$BS-$NUM_JOBS-$FIO_RW-$i.json
                 rm $HOME/test-volume/*.dat
             done
         done
