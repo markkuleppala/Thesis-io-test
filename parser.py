@@ -61,7 +61,7 @@ def plot_clat_bs(volume, rtc, job, rw):
     ms =  np.arange(0, 4000, 1)
     #title = 'Volume: {} RTC: {} Jobs: {} IO-pattern: {}'.format(volume, rtc, job, rw)
     title = '{}'.format(rw)
-    for p in range(8): # 3 / 8
+    for p in range(3): # 3 / 8
         bs = 512*2**p
         results = average_runs(volume, rtc, bs, job, rw)
         label = '{}, 50% {}ms'.format(bs, int(results['clat_50']/1000))
@@ -116,7 +116,7 @@ def subplot_clat_bs_by_rw(volume, rtc, job):
 def plot_clat_bw(volume, job, bs, rw):
     ms =  np.arange(0, 4000, 1)
     #title = 'Volume: {} RTC: {} Jobs: {} IO-pattern: {}'.format(volume, rtc, job, rw)
-    title = '{}'.format(rtc)
+    title = '{}'.format(rw)
     for rtc in ['bare', 'runc', 'clh', 'qemu', 'qemu-virtiofs']:
         results = average_runs(volume, rtc, job, bs, rw)
         label = '{}, 50% {}ms'.format(rtc, int(results['clat_50']/1000))
@@ -148,7 +148,7 @@ def main():
     #plt.subplots_adjust(wspace=0.3, hspace=0.3)
     #plt.show()
     #subplot_clat_bw_by_rw('emptydir-disk', 1, 1024)
-    subplot_clat_bs_by_rw('bare', 'bare', 1)
+    #subplot_clat_bs_by_rw('bare', 'bare', 1)
     plt.subplots_adjust(wspace=0.3, hspace=0.3)
     plt.show()
 
