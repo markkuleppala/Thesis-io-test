@@ -57,10 +57,11 @@ def average_runs(volume, rtc, bs, job, rw):
     return results
 
 def plot_clat_bs(volume, rtc, job, rw):
+    legend_loc = 'lower right'
     ms =  np.arange(0, 4000, 1)
     #title = 'Volume: {} RTC: {} Jobs: {} IO-pattern: {}'.format(volume, rtc, job, rw)
     title = '{}'.format(rw)
-    for p in range(3): # 8
+    for p in range(8): # 3 / 8
         bs = 512*2**p
         results = average_runs(volume, rtc, bs, job, rw)
         label = '{}, 50% {}ms'.format(bs, int(results['clat_50']/1000))
@@ -69,9 +70,11 @@ def plot_clat_bs(volume, rtc, job, rw):
     plt.xscale('log')
     plt.axis([1, 4000, -0.1, 1.1])
     plt.title(title)#, fontsize=12)
-    plt. xlabel('Commit latency (ms)')#, fontsize=8)
+    plt.xlabel('Commit latency (ms)')#, fontsize=8)
     plt.ylabel('Cumulative frequency')#, fontsize=8)
-    plt.legend(loc='lower right', prop={'size': 6})
+    if (results['clat_50']/1000 > 750):
+        legend_loc = 'upper left'
+    plt.legend(loc=legend_loc, prop={'size': 6})
     #plt.show()
 
 def plot_clat_rw(volume, rtc, bs, job):
@@ -141,8 +144,11 @@ def subplot_clat_bw_by_rw(volume, job, bs):
 def main():
     #plot_clat_bs('emptydir-disk', 'clh', 1, 'randread')
     #plot_clat_bs('emptydir-disk', 'clh', 512, 1)
-    subplot_clat_bs_by_rw('emptydir-disk', 'clh', 1)
+    #subplot_clat_bs_by_rw('emptydir-disk', 'clh', 1)
+    #plt.subplots_adjust(wspace=0.3, hspace=0.3)
+    #plt.show()
     #subplot_clat_bw_by_rw('emptydir-disk', 1, 1024)
+    subplot_clat_bs_by_rw('bare', 'bare', 1)
     plt.subplots_adjust(wspace=0.3, hspace=0.3)
     plt.show()
 
