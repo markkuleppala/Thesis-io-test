@@ -11,7 +11,7 @@ RW="read  write  randread  randwrite"
 for NUM_JOBS in 1 2 3
 do
     echo -e 'Jobs num: $NUM_JOBS\n'		
-    for BS in 512 1024 2048 4096 8192 16384 32768 65536
+    for BS in 512 2048 8192 32768 65536
     do
     	echo -e 'Block size: $BS\n'
         for FIO_RW in $RW
