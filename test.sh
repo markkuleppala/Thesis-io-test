@@ -19,7 +19,7 @@ do
             echo -e 'IO pattern: $FIO_RW\n'
             for i in 1 2 3
             do
-                RUNTIME=30 FILESIZE=32G SIZE=32G NUM_JOBS=$NUM_JOBS FIO_RW=$FIO_RW \
+                RUNTIME=30 FILESIZE=4G SIZE=4G NUM_JOBS=$NUM_JOBS FIO_RW=$FIO_RW \
                     fio fio_jobfile.fio \
                     --directory=$DIR \
                     --output-format=json+ \
