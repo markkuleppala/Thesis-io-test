@@ -5,7 +5,7 @@ metadata:
 spec:
   storageClassName: sc-local
   capacity:
-    storage: 20Gi
+    storage: 40Gi
   #volumeMode: Block
   accessModes:
   - ReadWriteOnce
