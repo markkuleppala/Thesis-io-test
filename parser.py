@@ -17,6 +17,7 @@ def average_runs(volume, rtc, bs, job, rw):
     results = {}
 
     for i in range (1, 4):
+        print('{}-{}-{}-{}-{}-{}.json'.format(volume, rtc, bs, job, rw, i))
         with open('{}-{}-{}-{}-{}-{}.json'.format(volume, rtc, bs, job, rw, i)) as f:
             #print('{}-{}-{}-{}-{}-{}.json'.format(volume, rtc, bs, job, rw, i))
             data = json.load(f)
@@ -62,35 +63,66 @@ def plot_bw(volume, job, rw):
     #title = 'Volume: {} RTC: {} Jobs: {} IO-pattern: {}'.format(volume, rtc, job, rw)
     title = '{}'.format(rw)
     rtc_list = ['runc', 'clh', 'qemu', 'qemu-virtiofs']
-    bs_list = [512, 2048, 8192, 32768, 65536]
-    data = np.empty((4,5))
-    X = np.arange(5)
-    for j in range(4):
+    bs_list = [512, 1024, 2048, 4096, 8192, 16384, 32768, 65536]
+    data = np.empty((len(rtc_list),len(bs_list)))
+    X = np.arange(len(bs_list))
+    for j in range(len(rtc_list)):
         rtc = rtc_list[j]
-        for i in range(5):
+        for i in range(len(bs_list)):
             bs = bs_list[i]
             results = average_runs(volume, rtc, bs, job, rw)
             data[j][i] = results['bw']/1000
-            #label = '{} '.format(rtc)
-            #plt.plot(66000, results['clat_ms_avg']/results['N'], label=label)
     print(data)
-    #fig = plt.figure()
-    #ax = fig.add_axes([0,0,1,1])
     width = 0.10
     plt.bar(X - 1.5*width, data[0], color = 'b', width = width, label='runc')
     plt.bar(X - width/2, data[1], color = 'g', width = width, label='clh')
     plt.bar(X + width/2, data[2], color = 'y', width = width, label='qemu')
     plt.bar(X + 1.5*width, data[3], color = 'r', width = width, label='qemu-vfs')
-    plt.grid(axis='both')
-    #plt.xscale('log')
-    #plt.axis([1, 4000, -0.1, 1.1])
+    plt.grid(axis='y')
     plt.title(title)#, fontsize=12)
-    plt.xlabel('Block size')#, fontsize=8)
+    plt.xlabel('Block size (bytes)')#, fontsize=8)
     plt.ylabel('Bandwidth (MB/s)')#, fontsize=8)
-    plt.xticks(X, bs_list)
+    plt.xticks(X, ['512', '1k', '2k', '4k', '8k', '16k', '32k', '64k'])
 
-    #if (results['clat_50']/1000 > 750):
-    #    legend_loc = 'upper left'
+    legend_loc = 'upper left'
+    plt.legend(loc=legend_loc, prop={'size': 6})
+
+def plot_bw_with_bare(volume, job, rw):
+    legend_loc = 'upper left'
+    ms =  np.arange(0, 4000, 1)
+    title = '{}'.format(rw)
+    rtc_list = ['bare', 'runc', 'clh', 'qemu', 'qemu-virtiofs']
+    bs_list = [512, 2048, 8192, 32768, 65536]
+    data = np.empty((len(rtc_list),len(bs_list)))
+    X = np.arange(len(bs_list))
+    for j in range(len(rtc_list)):
+        rtc = rtc_list[j]
+        for i in range(len(bs_list)):
+            bs = bs_list[i]
+            if (rtc == 'bare'):
+                results = average_runs('bare', rtc, bs, job, rw)
+            else:
+                results = average_runs(volume, rtc, bs, job, rw)
+            data[j][i] = results['bw']/1000
+    print(data)
+    width = 0.10
+    if rw == 'read':
+        plt.hlines(560, -0.5, 3.5, colors='c', linestyles='dotted', label='Theoretical max')
+    elif rw == 'write':
+        plt.hlines(510, -0.5, 3.5, colors='c', linestyles='dotted', label='Theoretical max')
+    plt.bar(X - 2*width, data[0], color = 'b', width = width, label='bare')
+    plt.bar(X - width ,  data[1], color = 'g', width = width, label='runc')
+    plt.bar(X         ,  data[2], color = 'black', width = width, label='clh')
+    plt.bar(X + width ,  data[3], color = 'y', width = width, label='qemu')
+    plt.bar(X + 2*width, data[4], color = 'r', width = width, label='qemu-vfs')
+
+    plt.grid(axis='y')
+    plt.title(title)#, fontsize=12)
+    plt.xlabel('Block size (bytes)')#, fontsize=8)
+    plt.ylabel('Bandwidth (MB/s)')#, fontsize=8)
+    plt.xticks(X, ['512', '2k', '4k', '32k', '64k'])
+
+    legend_loc = 'upper left'
     plt.legend(loc=legend_loc, prop={'size': 6})
 
 def plot_clat_bs(volume, rtc, job, rw):
@@ -117,7 +149,7 @@ def plot_clat_bs(volume, rtc, job, rw):
 
 def plot_clat_rw(volume, rtc, bs, job):
     ms = np.arange(0, 4000, 1)
-    title = 'Volume: {} RTC: {} Jobs: {} IO-pattern: {}'.format(volume, rtc, job, rw)
+    title = 'Volume: {} RTC: {} Jobs: {}'.format(volume, rtc, job)
     for rw in ['read', 'write', 'randread', 'randwrite']:
         results = average_runs(volume, rtc, job, bs, rw)
         label = '{}, 50% {}ms'.format(bs, int(results['clat_50']/1000))
@@ -169,7 +201,27 @@ def subplot_bw_by_bs(volume, job):
             #plot_clat_bs(volume, rtc, job, rw)
         plot_bw(volume, job, rw)
         plt.subplots_adjust(wspace=0.3, hspace=0.3)
-    plt.suptitle('Volume: {}'.format(volume))
+    plt.suptitle('Volume: {}, Job(s): {}'.format(volume, job))
+
+def subplot_bw_by_bs_with_bare(volume, job):
+    for rw in ['randread']:#, 'randwrite']:#['read', 'write', 'randread', 'randwrite']:
+        if rw == 'read':
+            plt.subplot(221)
+            #plt.subplots_adjust(wspace=0.5, hspace=0.5)
+           # plot_clat_bs(volume, rtc, job, rw)
+        elif rw == 'write':
+            plt.subplot(222)
+            #plt.subplots_adjust(wspace=0.1, hspace=0.2)
+            #plot_clat_bs(volume, rtc, job, rw)
+        elif rw == 'randread':
+            plt.subplot(223)
+            #plot_clat_bs(volume, rtc, job, rw)
+        elif rw == 'randwrite':
+            plt.subplot(224)
+            #plot_clat_bs(volume, rtc, job, rw)
+        plot_bw_with_bare(volume, job, rw)
+        plt.subplots_adjust(wspace=0.3, hspace=0.3)
+    plt.suptitle('Volume: {}, Job(s): {}'.format(volume, job))
 
 def plot_clat_bw(volume, job, bs, rw):
     ms =  np.arange(0, 4000, 1)
@@ -211,7 +263,8 @@ def main():
     #plt.show()
     #subplot_clat_bw_by_rw('pv', 1, 1024)
     #subplot_clat_bs_by_rw('hostpath', 'qemu', 1)
-    subplot_bw_by_bs('hostpath', 1)
+    #subplot_bw_by_bs('emptydir-disk', 3)
+    subplot_bw_by_bs_with_bare('emptydir-disk', 1)
     plt.subplots_adjust(wspace=0.3, hspace=0.3)
     plt.show()
 
