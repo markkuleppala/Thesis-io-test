@@ -64,11 +64,11 @@ resources:
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   requests:
     cpu: "2"
-    memory: 36Gi
+    memory: 18Gi
 
   limits:
     cpu: "2"
-    memory: 36Gi
+    memory: 18Gi
 
 
 autoscaling:
